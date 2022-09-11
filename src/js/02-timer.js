@@ -8,6 +8,7 @@ const daysEl = document.querySelector('span[data-days]');
 const hoursEl = document.querySelector('span[data-hours]');
 const minutesEl = document.querySelector('span[data-minutes]');
 const secondsEl = document.querySelector('span[data-seconds]');
+const allDocument = document.querySelector('html');
 
 let initialDate = null;
 let timer = null;
@@ -27,13 +28,7 @@ function startTimer() {
     )} секунд, час - пішов!`
   );
 
-  document
-    .querySelector('html')
-    .addEventListener('click', () =>
-      Notiflix.Notify.info(
-        'Ну, тут клікай або не клікай - тобі не врятуватися. Хіба що, ти можеш оновити сторінку=)'
-      )
-    );
+  allDocument.addEventListener('click', click);
 
   console.log(convertMs(timeRemain));
   timer = setInterval(() => {
@@ -66,7 +61,9 @@ function startTimer() {
     if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
       clearInterval(timer);
       startBtn.disabled = false;
+      input.disabled = false;
       Notiflix.Notify.failure('Ховайся в жито - тобі каюк');
+      allDocument.removeEventListener('click', click);
     }
   }, 1000);
 }
@@ -107,4 +104,10 @@ function convertMs(ms) {
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
+}
+
+function click() {
+  Notiflix.Notify.info(
+    'Ну, тут клікай або не клікай - тобі не врятуватися. Хіба що, ти можеш оновити сторінку=)'
+  );
 }
