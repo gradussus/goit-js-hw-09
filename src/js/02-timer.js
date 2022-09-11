@@ -18,11 +18,23 @@ startBtn.addEventListener('click', startTimer);
 
 function startTimer() {
   let timeRemain = initialDate - Date.now();
+  input.disabled = true;
+  startBtn.disabled = true;
+
   Notiflix.Notify.success(
     `На порятунoк у тебе є ${Math.floor(
       timeRemain / 1000
     )} секунд, час - пішов!`
   );
+
+  document
+    .querySelector('html')
+    .addEventListener('click', () =>
+      Notiflix.Notify.info(
+        'Ну, тут клікай або не клікай - тобі не врятуватися. Хіба що, ти можеш оновити сторінку=)'
+      )
+    );
+
   console.log(convertMs(timeRemain));
   timer = setInterval(() => {
     let timeRemain = initialDate - Date.now();
@@ -39,6 +51,7 @@ function startTimer() {
       3 < seconds &&
       seconds < 11
     ) {
+      Notiflix.Notify.init({ timeout: 600 });
       Notiflix.Notify.warning(`В тебе ${seconds} секунд, козаче`);
     }
     if (days === 0 && hours === 0 && minutes === 0 && seconds === 3) {
@@ -71,6 +84,7 @@ const options = {
     if (selectedDates[0] > Date.now()) {
       startBtn.disabled = false;
     }
+
     initialDate = selectedDates[0];
   },
 };
