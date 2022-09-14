@@ -1,6 +1,7 @@
 const startBnt = document.querySelector('[data-start]');
 const stopBnt = document.querySelector('[data-stop]');
 const body = document.querySelector('body');
+let timer = null;
 stopBnt.disabled = true;
 
 startBnt.addEventListener('click', startFn);
